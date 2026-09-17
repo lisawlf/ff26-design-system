@@ -1,0 +1,16 @@
+# Build output — regenerate with ./tools/export.sh
+export/
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node, if a toolchain is ever added
+node_modules/

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FF26 · 01 Cover (photo)</title>
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/ff26.css">
+<style>
+  /* Template-local layout only. Never redefine tokens or component styles here. */
+  body { margin: 0; background: #1a1a1a; }
+  .cover__logo  { position: absolute; top: 300px; left: 0; right: 0; display: flex; justify-content: center; z-index: 2; }
+  .cover__foot  { position: absolute; left: var(--ff-page-tight); bottom: 170px; z-index: 2; }
+  /* Sits beside the meta bar, clear of the headline bars above it. */
+  .cover__aside { position: absolute; right: var(--ff-page-tight); bottom: 104px; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: var(--ff-space-5); }
+  .cover__sticker { position: absolute; right: 44px; bottom: 380px; z-index: 3; }
+</style>
+</head>
+<body>
+
+<!-- 4:5 · 1080×1350 · LinkedIn + Instagram feed. Opening slide of a carousel. -->
+<div class="ff-canvas ff-canvas--4x5 ff-canvas--black">
+
+  <div class="ff-bleed"><img src="../assets/photos/hero-moon.jpg" alt=""></div>
+  <div class="ff-scrim ff-scrim--bottom"></div>
+
+  <div class="cover__logo">
+    <img class="ff-logo ff-logo--hero" src="../assets/logo/ff-logo-white.png" alt="Future Forward">
+  </div>
+
+  <!-- Optional aside. One per carousel, never more. -->
+  <div class="cover__sticker">
+    <div class="ff-sticker">
+      <span>Don't miss the</span>
+      <span><mark>launch&nbsp;day</mark></span>
+      <span><mark>ticket&nbsp;deal</mark></span>
+      <span>until May 28!</span>
+    </div>
+  </div>
+
+  <div class="cover__foot ff-stack ff-stack--xs ff-mark-lines">
+    <div><span class="ff-display ff-display--sm ff-mark-ink">We're back!</span></div>
+    <div><span class="ff-display ff-display--sm ff-mark-ink">Get your ticket to the future.</span></div>
+    <div><span class="ff-metabar ff-metabar--ink ff-metabar--bold">26.11.2026&nbsp;|&nbsp;weXelerate, Praterstraße 1, 1020 Vienna</span></div>
+  </div>
+
+  <div class="cover__aside">
+    <div class="ff-lockup ff-u-white" style="align-items: flex-end; text-align: right;">
+      <span class="ff-lockup__kicker">the yearly<br>flagship event by</span>
+      <img class="ff-lockup__logo" src="../assets/logo/wexelerate-white.png" alt="weXelerate">
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

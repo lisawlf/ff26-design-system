@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FF26 · 03 Agenda list</title>
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/ff26.css">
+<style>
+  body { margin: 0; background: #1a1a1a; }
+  .agenda { display: grid; grid-template-columns: 1fr 260px; gap: var(--ff-space-8); height: 100%; }
+  .agenda__rail { display: grid; grid-template-rows: repeat(3, 1fr); gap: var(--ff-space-3); }
+  .agenda__rail .ff-figure { height: 100%; }
+</style>
+</head>
+<body>
+
+<!-- 4:5 · Programme / agenda. Two columns: content left, photo rail right.
+     Six rows maximum — past that, split across two slides. -->
+<div class="ff-canvas ff-canvas--4x5">
+  <div class="ff-pad" style="padding: 88px var(--ff-page-tight) 88px;">
+    <div class="agenda">
+
+      <div style="display:flex; flex-direction:column;">
+        <p class="ff-eyebrow">What happens at #ff26</p>
+
+        <h1 class="ff-display ff-u-mt-4" style="font-size: 58px;">
+          One full day.<br>Infinite<br>connections.
+        </h1>
+
+        <div class="ff-list ff-u-mt-8">
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#8594;</div>
+            <div>
+              <div class="ff-list-row__label">Coffee Rave</div>
+              <div class="ff-list-row__desc">An energetic morning opener. Get ready for your not so average conference start.</div>
+            </div>
+          </div>
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#9096;</div>
+            <div>
+              <div class="ff-list-row__label">Inspiration Stage</div>
+              <div class="ff-list-row__desc">International keynotes and panel discussions.</div>
+            </div>
+          </div>
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#10003;</div>
+            <div>
+              <div class="ff-list-row__label">Deep Dive Tracks</div>
+              <div class="ff-list-row__desc">Hands-on sessions, giving you practical frameworks, not theoretical outlines.</div>
+            </div>
+          </div>
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#9734;</div>
+            <div>
+              <div class="ff-list-row__label">Startup Pitching Arena</div>
+              <div class="ff-list-row__desc">40 startups · 40 live investment opportunities.</div>
+            </div>
+          </div>
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#9679;</div>
+            <div>
+              <div class="ff-list-row__label">Curated Matchmaking</div>
+              <div class="ff-list-row__desc">200+ pre-booked 1:1 meetings · pure signal, no noise.</div>
+            </div>
+          </div>
+          <div class="ff-list-row">
+            <div class="ff-list-row__icon">&#9835;</div>
+            <div>
+              <div class="ff-list-row__label">Afterparty</div>
+              <div class="ff-list-row__desc">The deal-making continues if you can talk over the DJ set. Music, drinks and countless connections.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ff-spacer"></div>
+
+        <div style="display:flex; justify-content:center; padding-top: var(--ff-space-6);">
+          <img class="ff-logo ff-logo--sm" src="../assets/logo/ff-logo-black.png" alt="Future Forward">
+        </div>
+      </div>
+
+      <div class="agenda__rail">
+        <div class="ff-figure"><img src="../assets/photos/stage.jpg" alt=""></div>
+        <div class="ff-figure"><img src="../assets/photos/gallery-02.jpg" alt=""></div>
+        <div class="ff-figure"><img src="../assets/photos/gallery-05.jpg" alt=""></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

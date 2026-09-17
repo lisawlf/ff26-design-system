@@ -1,0 +1,22 @@
+/* ==========================================================================
+   Future Forward 2026 — Typefaces
+
+   All four families are SIL Open Font License 1.1 and free to embed.
+     Sora              — display / headlines            (Google Fonts)
+     Barlow            — body copy                      (Google Fonts)
+     JetBrains Mono    — eyebrows, data, meta           (Google Fonts)
+     Noto Serif Display — editorial lede (condensed)    (Google Fonts)
+
+   Loading via the Google Fonts CDN is the default and is what every template
+   in this repo uses. If you need offline / deterministic rendering (batch PNG
+   export, print, an air-gapped machine), self-host instead: see
+   docs/02-typography.md → "Self-hosting".
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif+Display:ital,wdth,wght@0,62.5..100,200..900;1,62.5..100,200..900&display=swap');
+
+/* Noto Serif Display is a variable font with a width (wdth) axis running
+   62.5 → 100. The request above pulls the full axis; the lede style pins it to
+   the condensed end (wdth 70) — see .ff-lede in ff26.css. Dropping the `wdth`
+   segment from the URL silently gives you the normal width and the lede will
+   run long, which is the single most common way to break this system. */

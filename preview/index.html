@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Future Forward 2026 — Design System</title>
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/ff26.css">
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0;
+    background: #ECECEA;
+    font-family: var(--ff-font-body);
+    color: var(--ff-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .doc { max-width: 1180px; margin: 0 auto; padding: 72px 32px 160px; }
+
+  .masthead { padding: 64px 0 40px; border-bottom: 3px solid var(--ff-ink); }
+  .masthead h1 {
+    font-family: var(--ff-font-display); font-weight: 600; font-size: clamp(40px, 7vw, 76px);
+    line-height: .95; letter-spacing: -.03em; text-transform: uppercase; margin: 0;
+  }
+  .masthead .sub { font-family: var(--ff-font-mono); font-size: 14px; letter-spacing: .28em;
+                   text-transform: uppercase; color: var(--ff-ink-4); margin: 0 0 14px; }
+  .masthead p.lead { font-size: 18px; line-height: 1.5; max-width: 62ch; margin: 22px 0 0; color: var(--ff-ink-2); }
+
+  h2.sec {
+    font-family: var(--ff-font-display); font-weight: 600; font-size: 30px; letter-spacing: -.02em;
+    text-transform: uppercase; margin: 84px 0 6px; padding-top: 28px; border-top: 1px solid #D6D6D3;
+  }
+  h2.sec:first-of-type { border-top: 0; }
+  h3.sub { font-family: var(--ff-font-mono); font-size: 13px; letter-spacing: .2em; text-transform: uppercase;
+           color: var(--ff-ink-4); margin: 40px 0 14px; }
+  p.note { font-size: 15px; line-height: 1.55; max-width: 70ch; color: var(--ff-ink-3); margin: 0 0 22px; }
+  code { font-family: var(--ff-font-mono); font-size: .88em; background: #fff; padding: .12em .4em;
+         border: 1px solid #DDD; border-radius: 4px; }
+
+  /* swatches */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .sw { background: #fff; border: 1px solid #DDD; border-radius: 8px; overflow: hidden; }
+  .sw__chip { height: 74px; }
+  .sw__meta { padding: 10px 12px 12px; font-family: var(--ff-font-mono); font-size: 11.5px; line-height: 1.5; }
+  .sw__meta b { display: block; font-weight: 700; font-size: 12px; }
+  .sw__meta span { color: var(--ff-ink-4); }
+
+  /* type specimens */
+  .spec { background: #fff; border: 1px solid #DDD; border-radius: 8px; padding: 22px 26px; margin-bottom: 12px; }
+  .spec__tag { font-family: var(--ff-font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+               color: var(--ff-ink-4); margin-bottom: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* component demos live inside a real canvas context */
+  .demo { background: var(--ff-paper); border: 1px solid #DDD; border-radius: 8px; padding: 34px; margin-bottom: 14px; }
+  .demo--dark { background: var(--ff-ink); }
+
+  /* template gallery */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; }
+  .tile { background: #fff; border: 1px solid #DDD; border-radius: 8px; overflow: hidden; }
+  .tile__view { background: #DEDEDB; overflow: hidden; position: relative; }
+  .tile__view iframe { border: 0; transform-origin: top left; display: block; }
+  .tile__meta { padding: 12px 14px 14px; }
+  .tile__meta b { font-family: var(--ff-font-display); font-weight: 600; font-size: 14px;
+                  letter-spacing: -.01em; text-transform: uppercase; display: block; }
+  .tile__meta a { font-family: var(--ff-font-mono); font-size: 11px; color: var(--ff-ink-4); text-decoration: none; }
+  .tile__meta a:hover { color: var(--ff-ink); text-decoration: underline; }
+
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .rules { grid-template-columns: 1fr; } }
+  .rules > div { background: #fff; border: 1px solid #DDD; border-radius: 8px; padding: 20px 22px; }
+  .rules h4 { font-family: var(--ff-font-mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 12px; }
+  .rules ul { margin: 0; padding-left: 18px; }
+  .rules li { font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
+  .do h4  { color: #2E7D32; }
+  .dont h4{ color: #C62828; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="masthead">
+    <p class="sub">Design System · v1.0</p>
+    <h1>Future<br>Forward 2026</h1>
+    <p class="lead">
+      The visual system behind #FF26, derived from the Launch Day Announcement deck.
+      Four typefaces, one accent colour, a fixed set of components and a canvas per
+      export format. Everything on this page is live CSS from <code>css/ff26.css</code>
+      — what you see here is what ships.
+    </p>
+  </header>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Colour</h2>
+  <p class="note">
+    One accent, one ink, a short greyscale. Acid is a spotlight, not a surface: exactly
+    one acid element per composition. Backgrounds are off-white (<code>#FAFAFA</code>),
+    never pure white — pure white is reserved for cards sitting on photographs.
+  </p>
+  <div class="swatches" id="swatches"></div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Typography</h2>
+  <p class="note">
+    Four families, four jobs. <b>Sora</b> shouts, <b>Noto Serif Display</b> (extra-condensed,
+    light) adds the one human line, <b>Barlow</b> explains, <b>JetBrains&nbsp;Mono</b> states
+    facts. A slide that uses all four in that order is on-brand almost automatically.
+  </p>
+
+  <h3 class="sub">Sora — display</h3>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-display--xl</span><span>92 / 0.94 / -0.03em</span><span>SemiBold 600</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-display ff-display--xl">Your seat is waiting.</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-display</span><span>64 / 0.96 / -0.025em</span><span>SemiBold 600</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-display">Your favourite innovation event is back.</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-headline</span><span>42 / 1.04 / -0.02em</span><span>Bold 700</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-headline">One full day. Infinite connections.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Noto Serif Display — lede</h3>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-lede</span><span>42 / 1.14 / wdth 62.5</span><span>Light 300</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-lede">The ticket price will never be <em>this good</em> again.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Barlow — body</h3>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-body--lg</span><span>28 / 1.26</span><span>Light 300</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-body ff-body--lg">We're launching at our best-ever price — and it only goes up from here.</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-body</span><span>23 / 1.3</span><span>Regular 400</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-body">The world is changing at an unprecedented pace. Industries are being disrupted. Rules are being rewritten.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">JetBrains Mono — eyebrow, meta, data</h3>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-eyebrow</span><span>22 / 0.34em tracking</span><span>Regular 400</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-eyebrow">What happens at #ff26</div>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="spec__tag"><span>.ff-mono--data</span><span>41 / 1.0</span><span>Regular 400</span></div>
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-mono ff-mono--data">899 · 42 · 215 · 50+</div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Marks &amp; meta</h2>
+  <p class="note">
+    The highlight bar is the signature move of this identity. Acid on light backgrounds,
+    solid black over bright photography, solid white over dark photography. One per canvas.
+  </p>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-stack ff-stack--sm ff-mark-lines">
+        <div><span class="ff-display ff-display--sm ff-mark">Get the launch deal:</span></div>
+        <div><span class="ff-display ff-display--sm ff-mark-ink">We're back!</span></div>
+        <div><span class="ff-metabar">26.11.2026&nbsp;|&nbsp;weXelerate, Praterstrasse 1, 1020 Vienna</span></div>
+        <div><span class="ff-metabar ff-metabar--ink">26.11.2026&nbsp;|&nbsp;weXelerate, Vienna</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="demo demo--dark">
+    <div class="ff-canvas ff-on-photo" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-stack ff-stack--sm ff-mark-lines">
+        <div><span class="ff-display ff-display--sm ff-mark-white">Learn to navigate it:</span></div>
+        <div><span class="ff-metabar ff-metabar--white">26.11.2026&nbsp;|&nbsp;weXelerate, Vienna</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Buttons</h2>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-row" style="flex-wrap: wrap;">
+        <a class="ff-btn"><span class="ff-btn__arrow">&#8594;</span> Get your ticket</a>
+        <a class="ff-btn ff-btn--ink">Register now</a>
+        <a class="ff-btn ff-btn--ghost ff-btn--sm">See programme</a>
+        <span class="ff-next">&#8594;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Components</h2>
+
+  <h3 class="sub">List rows</h3>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-list">
+        <div class="ff-list-row">
+          <div class="ff-list-row__icon">&#8594;</div>
+          <div>
+            <div class="ff-list-row__label">Coffee Rave</div>
+            <div class="ff-list-row__desc">An energetic morning opener. Get ready for your not so average conference start.</div>
+          </div>
+        </div>
+        <div class="ff-list-row">
+          <div class="ff-list-row__icon">&#9734;</div>
+          <div>
+            <div class="ff-list-row__label">Startup Pitching Arena</div>
+            <div class="ff-list-row__desc">40 startups · 40 live investment opportunities.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Stat cards</h3>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-stats">
+        <div class="ff-stat">
+          <div class="ff-stat__value">899</div>
+          <div class="ff-stat__label">Attendees</div>
+          <div class="ff-stat__note">With a golden ratio of CEOs and founders</div>
+        </div>
+        <div class="ff-stat">
+          <div class="ff-stat__value">42</div>
+          <div class="ff-stat__label">Nations</div>
+          <div class="ff-stat__note">Represented</div>
+        </div>
+        <div class="ff-stat ff-stat--accent">
+          <div class="ff-stat__value">215</div>
+          <div class="ff-stat__label">Matchmaking</div>
+          <div class="ff-stat__note">53+ hrs of 1:1 networking sessions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Bar chart</h3>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-bars">
+        <div class="ff-bar ff-bar--lead">
+          <div class="ff-bar__label">Executives &amp; Founders</div>
+          <div class="ff-bar__track"><div class="ff-bar__fill" style="--ff-bar-value:100%"></div></div>
+          <div class="ff-bar__value">40 %</div>
+        </div>
+        <div class="ff-bar">
+          <div class="ff-bar__label">Management &amp; Directors</div>
+          <div class="ff-bar__track"><div class="ff-bar__fill" style="--ff-bar-value:60%"></div></div>
+          <div class="ff-bar__value">24 %</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Comparison table</h3>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-compare" style="max-width: 760px;">
+        <div class="ff-compare__cell ff-compare__head">Before</div>
+        <div class="ff-compare__cell ff-compare__head ff-compare__head--after">After</div>
+        <div class="ff-compare__cell">Navigating<br>uncertainty alone</div>
+        <div class="ff-compare__cell">Part of a 1,000-<br>strong network<span class="ff-tick">&#10003;</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Panel, fact tile, sticker</h3>
+  <div class="demo">
+    <div class="ff-canvas" style="width:auto;height:auto;background:none;overflow:visible;">
+      <div class="ff-row ff-row--top" style="gap: 32px; flex-wrap: wrap;">
+        <div class="ff-panel" style="flex: 1 1 420px;">
+          <div class="ff-panel__title">The golden ratio</div>
+          <p class="ff-body ff-body--md ff-body--muted">~31% Startups · ~32% Corporates · ~37% Enablers</p>
+        </div>
+        <div class="ff-fact" style="width: 240px;">
+          <div class="ff-fact__over">Thursday</div>
+          <div class="ff-fact__value">26.11.</div>
+          <div class="ff-fact__under">Vienna · 2026</div>
+        </div>
+        <div class="ff-sticker">
+          <span>Don't miss the</span>
+          <span><mark>launch&nbsp;day</mark></span>
+          <span><mark>ticket&nbsp;deal</mark></span>
+          <span>until May 28!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Templates</h2>
+  <p class="note">
+    Sixteen ready-to-fill layouts. Templates 01–11 recreate the launch deck slide for
+    slide; 12–16 extend the same parts to speakers, quotes, stories, squares and the
+    LinkedIn cover. Open one, replace the copy, export. Each tile links to its file.
+  </p>
+  <div class="gallery" id="gallery"></div>
+
+  <!-- ==================================================================== -->
+  <h2 class="sec">Rules</h2>
+  <div class="rules">
+    <div class="do">
+      <h4>Do</h4>
+      <ul>
+        <li>One acid element per canvas — highlight, button, table header or a single bar.</li>
+        <li>Set headlines uppercase in Sora and let them run to three short lines.</li>
+        <li>Follow every display headline with exactly one serif lede line.</li>
+        <li>Put every number in JetBrains Mono. That is what makes claims read as facts.</li>
+        <li>Scrim photographs before placing white text, or knock the text out of a solid bar.</li>
+        <li>Keep the date/venue meta bar on the first and last slide of every carousel.</li>
+      </ul>
+    </div>
+    <div class="dont">
+      <h4>Don't</h4>
+      <ul>
+        <li>Don't use acid as a page background or for body copy — it stops being a signal.</li>
+        <li>Don't introduce a fifth typeface, a gradient, or a drop shadow.</li>
+        <li>Don't set the serif in uppercase, or the display in sentence case.</li>
+        <li>Don't put white text straight onto an unprotected photograph.</li>
+        <li>Don't stretch, recolour or box the logo. Black or white, nothing else.</li>
+        <li>Don't use more than one sticker in a carousel — it is a wink, not a voice.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const COLORS = [
+  ['Acid',            '#DCFF00', '--ff-acid'],
+  ['Ink',             '#0E0E0E', '--ff-ink'],
+  ['Ink pure',        '#000000', '--ff-ink-pure'],
+  ['Ink 2',           '#333333', '--ff-ink-2'],
+  ['Ink 3',           '#555555', '--ff-ink-3'],
+  ['Ink 4 / muted',   '#888888', '--ff-ink-4'],
+  ['Paper',           '#FAFAFA', '--ff-paper'],
+  ['Surface',         '#F7F7F7', '--ff-surface'],
+  ['Surface 2',       '#F0F0F0', '--ff-surface-2'],
+  ['Hairline',        '#E8E8E8', '--ff-hairline'],
+  ['Hairline strong', '#D8D8D8', '--ff-hairline-strong'],
+  ['White',           '#FFFFFF', '--ff-white'],
+];
+document.getElementById('swatches').innerHTML = COLORS.map(([n,hex,v]) => `
+  <div class="sw">
+    <div class="sw__chip" style="background:${hex};${hex==='#FFFFFF'||hex==='#FAFAFA'?'box-shadow:inset 0 0 0 1px #E0E0DD;':''}"></div>
+    <div class="sw__meta"><b>${n}</b>${hex}<br><span>${v}</span></div>
+  </div>`).join('');
+
+const TEMPLATES = [
+  ['01-cover-photo.html',     'Cover (photo)',      1080, 1350],
+  ['02-statement.html',       'Statement',          1080, 1350],
+  ['03-agenda-list.html',     'Agenda list',        1080, 1350],
+  ['04-before-after.html',    'Before / after',     1080, 1350],
+  ['05-stats.html',           'Stats',              1080, 1350],
+  ['06-bar-chart.html',       'Bar chart',          1080, 1350],
+  ['07-photo-steps.html',     'Photo + steps',      1080, 1350],
+  ['08-dark-photo-info.html', 'Dark photo + cards', 1080, 1350],
+  ['09-ticket-offer.html',    'Ticket offer',       1080, 1350],
+  ['10-cta-closing.html',     'Closing CTA',        1080, 1350],
+  ['11-photo-closing.html',   'Photo closing',      1080, 1350],
+  ['12-speaker-card.html',    'Speaker card',       1080, 1350],
+  ['13-quote.html',           'Quote (1:1)',        1080, 1080],
+  ['14-story-9x16.html',      'Story (9:16)',       1080, 1920],
+  ['15-square-announce.html', 'Square (1:1)',       1080, 1080],
+  ['16-linkedin-cover.html',  'LinkedIn cover',     1584, 396 ],
+];
+
+document.getElementById('gallery').innerHTML = TEMPLATES.map(([file,name,w,h]) => {
+  const colW = 300;                 // nominal tile width; scaled by CSS grid anyway
+  const s = colW / w;
+  return `
+  <div class="tile">
+    <div class="tile__view" style="height:${Math.round(h*s)}px">
+      <iframe src="../templates/${file}" width="${w}" height="${h}" loading="lazy"
+              scrolling="no" style="transform:scale(${s})"></iframe>
+    </div>
+    <div class="tile__meta">
+      <b>${name}</b>
+      <a href="../templates/${file}" target="_blank">templates/${file} · ${w}×${h}</a>
+    </div>
+  </div>`;
+}).join('');
+</script>
+
+</body>
+</html>

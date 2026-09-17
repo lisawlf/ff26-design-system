@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Future Forward 2026 — Design Tokens
+   Generated from tokens/tokens.json. Do not hand-edit values here; edit the
+   JSON and mirror the change.
+
+   All sizes are px on the 1080×1350 reference canvas. A canvas element scales
+   the whole system by setting --ff-scale (see ff26.css .ff-canvas).
+   ========================================================================== */
+
+:root {
+  /* --- Brand accent ------------------------------------------------------ */
+  --ff-acid:            #DCFF00;
+  --ff-acid-dim:        #C4E300;
+
+  /* --- Ink --------------------------------------------------------------- */
+  --ff-ink:             #0E0E0E;
+  --ff-ink-pure:        #000000;
+  --ff-ink-2:           #333333;
+  --ff-ink-3:           #555555;
+  --ff-ink-4:           #888888;
+
+  /* --- Surfaces ---------------------------------------------------------- */
+  --ff-paper:           #FAFAFA;
+  --ff-surface:         #F7F7F7;
+  --ff-surface-2:       #F0F0F0;
+  --ff-hairline:        #E8E8E8;
+  --ff-hairline-strong: #D8D8D8;
+  --ff-white:           #FFFFFF;
+
+  --ff-scrim:           rgba(0, 0, 0, 0.38);
+  --ff-scrim-strong:    rgba(0, 0, 0, 0.58);
+
+  --ff-linkedin:        #0A66C2;
+
+  /* --- Semantic aliases --------------------------------------------------
+     Every component colours itself from these four, never from the raw
+     palette. Flipping the context (see the .ff-dark block at the bottom of
+     this file) then recolours a whole subtree correctly in one move.
+     ----------------------------------------------------------------------- */
+  --ff-bg:              var(--ff-paper);
+  --ff-fg-strong:       var(--ff-ink-pure);  /* display headlines */
+  --ff-fg:              var(--ff-ink);       /* body, titles, data */
+  --ff-fg-soft:         var(--ff-ink-3);     /* captions, notes */
+  --ff-fg-muted:        var(--ff-ink-4);     /* eyebrows, secondary */
+  --ff-border:          var(--ff-hairline);
+
+  /* --- Font families ----------------------------------------------------- */
+  --ff-font-display: 'Sora', 'Helvetica Neue', Arial, sans-serif;
+  --ff-font-body:    'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  --ff-font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --ff-font-serif:   'Noto Serif Display', 'Times New Roman', serif;
+
+  /* --- Font weights ------------------------------------------------------ */
+  --ff-w-light:    300;
+  --ff-w-regular:  400;
+  --ff-w-medium:   500;
+  --ff-w-semibold: 600;
+  --ff-w-bold:     700;
+
+  /* --- Type scale (px @ 1080 canvas) ------------------------------------- */
+  --ff-size-display-xl: 92px;
+  --ff-size-display-lg: 66px;
+  --ff-size-display-md: 64px;
+  --ff-size-display-sm: 56px;
+  --ff-size-headline:   42px;
+  --ff-size-title:      29px;
+  --ff-size-label:      21px;
+
+  --ff-size-serif-lede: 42px;
+  --ff-size-serif-sm:   40px;
+
+  /* Width axis of Noto Serif Display. 62.5 = ExtraCondensed, the deck default. */
+  --ff-serif-wdth:      62.5;
+
+  --ff-size-body-lg:    28px;
+  --ff-size-body-md:    27px;
+  --ff-size-body:       23px;
+  --ff-size-body-sm:    18px;
+  --ff-size-caption:    16px;
+  --ff-size-caption-xs: 14px;
+
+  --ff-size-eyebrow:    22px;
+  --ff-size-meta:       21px;
+  --ff-size-mono-data:  41px;
+  --ff-size-mono-lg:    31px;
+  --ff-size-mono-md:    27px;
+  --ff-size-mono-sm:    21px;
+  --ff-size-mono-xs:    16px;
+
+  /* --- Tracking ---------------------------------------------------------- */
+  --ff-track-display: -0.025em;
+  --ff-track-tight:   -0.02em;
+  --ff-track-eyebrow: 0.34em;
+  --ff-track-meta:    0.02em;
+
+  /* --- Leading ----------------------------------------------------------- */
+  --ff-lh-display: 0.96;
+  --ff-lh-tight:   1.04;
+  --ff-lh-serif:   1.14;
+  --ff-lh-body:    1.3;
+
+  /* --- Spacing (px @ 1080 canvas) ---------------------------------------- */
+  --ff-space-1:  4px;
+  --ff-space-2:  8px;
+  --ff-space-3:  12px;
+  --ff-space-4:  16px;
+  --ff-space-5:  24px;
+  --ff-space-6:  32px;
+  --ff-space-7:  40px;
+  --ff-space-8:  48px;
+  --ff-space-9:  64px;
+  --ff-space-10: 80px;
+  --ff-space-11: 96px;
+  --ff-space-12: 128px;
+
+  --ff-page:       108px;
+  --ff-page-tight: 60px;
+
+  /* --- Radius ------------------------------------------------------------ */
+  --ff-radius-sm:   6px;
+  --ff-radius-md:   10px;
+  --ff-radius-lg:   18px;
+  --ff-radius-pill: 999px;
+
+  /* --- Borders ----------------------------------------------------------- */
+  --ff-border-hairline: 1px solid var(--ff-hairline);
+  --ff-border-ink:      2px solid var(--ff-ink);
+
+  /* --- Motion (web / video only) ----------------------------------------- */
+  --ff-dur-fast: 160ms;
+  --ff-dur-base: 280ms;
+  --ff-dur-slow: 520ms;
+  --ff-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ff-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* --------------------------------------------------------------------------
+   CONTEXT SWITCHES
+
+   Only the semantic aliases flip — the raw palette never changes, and no
+   component ever needs a `.ff-dark .ff-thing` override. This is the whole
+   mechanism: put the right context class on a wrapper and everything inside
+   recolours itself.
+
+     .ff-canvas--dark   a dark canvas
+     .ff-on-photo       a content wrapper sitting over a photograph
+     .ff-dark           any other subtree you want dark
+
+   Never reach for an inline `color: #fff` instead of one of these: component
+   classes set `color: var(--ff-fg)` with class specificity and will win.
+   -------------------------------------------------------------------------- */
+.ff-dark,
+.ff-canvas--dark,
+.ff-canvas--black,
+.ff-on-photo {
+  --ff-bg:          var(--ff-ink);
+  --ff-fg-strong:   var(--ff-white);
+  --ff-fg:          var(--ff-white);
+  --ff-fg-soft:     rgba(255, 255, 255, 0.88);
+  --ff-fg-muted:    rgba(255, 255, 255, 0.72);
+  --ff-border:      rgba(255, 255, 255, 0.22);
+}
+
+/* Light island inside a dark context — a white card on a photo slide, a stat
+   tile, a ticket. Flips the aliases back so the same component classes read
+   correctly again. Applied automatically to the light surface components in
+   ff26.css; add it by hand to any custom light box you build on a dark canvas. */
+.ff-light {
+  --ff-bg:          var(--ff-white);
+  --ff-fg-strong:   var(--ff-ink-pure);
+  --ff-fg:          var(--ff-ink);
+  --ff-fg-soft:     var(--ff-ink-3);
+  --ff-fg-muted:    var(--ff-ink-4);
+  --ff-border:      var(--ff-hairline);
+}

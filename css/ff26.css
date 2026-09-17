@@ -1,0 +1,844 @@
+/* ==========================================================================
+   FUTURE FORWARD 2026 — DESIGN SYSTEM
+   ff26.css — canvases, type, layout and components
+
+   Usage
+     <link rel="stylesheet" href="css/fonts.css">
+     <link rel="stylesheet" href="tokens/tokens.css">
+     <link rel="stylesheet" href="css/ff26.css">
+
+   Everything is authored on a 1080px-wide reference canvas. Put content inside
+   a .ff-canvas and it renders at export size; wrap that canvas in .ff-frame to
+   see it scaled down on screen without changing a single measurement.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. RESET
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.ff-canvas, .ff-canvas * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  list-style: none;
+}
+
+.ff-canvas img,
+.ff-canvas svg { display: block; max-width: 100%; }
+
+
+/* ==========================================================================
+   2. CANVAS
+   Fixed-size export surface. One canvas = one exported graphic.
+   ========================================================================== */
+
+.ff-canvas {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  width: 1080px;
+  height: 1350px;
+
+  background: var(--ff-bg);
+  color: var(--ff-fg);
+
+  font-family: var(--ff-font-body);
+  font-size: var(--ff-size-body);
+  font-weight: var(--ff-w-regular);
+  line-height: var(--ff-lh-body);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+/* -- Formats ------------------------------------------------------------- */
+.ff-canvas--4x5    { width: 1080px; height: 1350px; }  /* feed post / carousel */
+.ff-canvas--1x1    { width: 1080px; height: 1080px; }  /* square */
+.ff-canvas--9x16   { width: 1080px; height: 1920px; }  /* story */
+.ff-canvas--16x9   { width: 1920px; height: 1080px; }  /* slide / screen */
+.ff-canvas--cover  { width: 1584px; height: 396px;  }  /* LinkedIn cover */
+
+/* -- Contexts ------------------------------------------------------------ */
+.ff-canvas--dark  { background: var(--ff-ink); }
+.ff-canvas--black { background: #000; }
+.ff-canvas--white { background: var(--ff-white); }
+
+/* Preview frame: scales the canvas visually, measurements stay authored in px.
+   Set --ff-preview to any factor (0.4 = 40%). */
+.ff-frame {
+  --ff-preview: 0.4;
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+}
+.ff-frame > .ff-canvas {
+  transform: scale(var(--ff-preview));
+  transform-origin: top left;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT
+   ========================================================================== */
+
+/* Page padding. The default for any light editorial slide. */
+.ff-pad {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: var(--ff-space-12) var(--ff-page);
+  display: flex;
+  flex-direction: column;
+}
+.ff-pad--tight { padding: var(--ff-space-10) var(--ff-page-tight); }
+.ff-pad--flush { padding: 0; }
+
+/* Vertical rhythm helper: .ff-stack sets the gap between direct children. */
+.ff-stack       { display: flex; flex-direction: column; gap: var(--ff-space-5); }
+.ff-stack--xs   { gap: var(--ff-space-2); }
+.ff-stack--sm   { gap: var(--ff-space-3); }
+.ff-stack--md   { gap: var(--ff-space-6); }
+.ff-stack--lg   { gap: var(--ff-space-8); }
+.ff-stack--xl   { gap: var(--ff-space-10); }
+
+.ff-row  { display: flex; align-items: center; gap: var(--ff-space-5); }
+.ff-row--between { justify-content: space-between; }
+.ff-row--end     { justify-content: flex-end; }
+.ff-row--top     { align-items: flex-start; }
+.ff-row--baseline{ align-items: baseline; }
+
+.ff-grid    { display: grid; gap: var(--ff-space-5); }
+.ff-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.ff-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+.ff-spacer  { flex: 1 1 auto; min-height: 0; }
+
+/* Full-bleed photographic layer. Always the first child of the canvas. */
+.ff-bleed {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.ff-bleed img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scrim over a photo. Required before white text is placed on an image.
+   The gradients are deliberately heavy: they are sized for a bright frame
+   (the moon surface, a daylight window) rather than an already-dark one, so
+   the same class works on any photograph in the library without tuning. */
+.ff-scrim { position: absolute; inset: 0; z-index: 1; background: var(--ff-scrim); }
+.ff-scrim--strong { background: var(--ff-scrim-strong); }
+.ff-scrim--top    { background: linear-gradient(180deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.34) 38%, rgba(0,0,0,0) 68%); }
+.ff-scrim--bottom { background: linear-gradient(0deg,   rgba(0,0,0,.86) 0%, rgba(0,0,0,.42) 38%, rgba(0,0,0,0) 72%); }
+.ff-scrim--both   { background: linear-gradient(180deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.10) 30%,
+                                                        rgba(0,0,0,.10) 48%, rgba(0,0,0,.86) 100%); }
+
+
+/* ==========================================================================
+   4. TYPOGRAPHY
+   ========================================================================== */
+
+/* -- Eyebrow -------------------------------------------------------------
+   Mono, uppercase, very wide tracking, preceded by an em dash. Sits directly
+   above a display headline and names the section. Always muted, never acid. */
+.ff-eyebrow {
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-eyebrow);
+  font-weight: var(--ff-w-regular);
+  letter-spacing: var(--ff-track-eyebrow);
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--ff-fg-muted);
+}
+.ff-eyebrow::before { content: "—"; letter-spacing: 0; margin-right: 0.7em; }
+.ff-eyebrow--dot::before { content: "●"; font-size: 0.6em; color: var(--ff-acid); vertical-align: 0.25em; }
+
+/* -- Display -------------------------------------------------------------
+   Sora SemiBold, uppercase, negative tracking, leading under 1.0. The loudest
+   element on the canvas. One per slide. */
+.ff-display {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-semibold);
+  font-size: var(--ff-size-display-md);
+  line-height: var(--ff-lh-display);
+  letter-spacing: var(--ff-track-display);
+  text-transform: uppercase;
+  color: var(--ff-fg-strong);
+}
+.ff-display--xl { font-size: var(--ff-size-display-xl); line-height: 0.94; letter-spacing: -0.03em; }
+.ff-display--lg { font-size: var(--ff-size-display-lg); }
+.ff-display--sm { font-size: var(--ff-size-display-sm); line-height: 1.0; letter-spacing: var(--ff-track-tight); }
+.ff-display--bold { font-weight: var(--ff-w-bold); }
+
+.ff-headline {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-headline);
+  line-height: 1.04;
+  letter-spacing: var(--ff-track-tight);
+  text-transform: uppercase;
+  color: var(--ff-fg);
+}
+
+.ff-title {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-title);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--ff-fg);
+}
+
+.ff-label {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-label);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ff-fg);
+}
+
+/* -- Serif lede ----------------------------------------------------------
+   Noto Serif Display Light, condensed, sentence case. The one moment of warmth
+   in an otherwise geometric system. Sits under the display headline, one or
+   two lines, never more. Use <em> for a single emphasised phrase. */
+.ff-lede {
+  font-family: var(--ff-font-serif);
+  font-variation-settings: 'wdth' var(--ff-serif-wdth);
+  font-stretch: 62.5%;
+  font-weight: var(--ff-w-light);
+  font-size: var(--ff-size-serif-lede);
+  line-height: var(--ff-lh-serif);
+  letter-spacing: 0;
+  color: var(--ff-fg);
+}
+.ff-lede--sm { font-size: var(--ff-size-serif-sm); }
+.ff-lede em  { font-style: italic; }
+
+/* -- Body ---------------------------------------------------------------- */
+.ff-body {
+  font-family: var(--ff-font-body);
+  font-weight: var(--ff-w-regular);
+  font-size: var(--ff-size-body);
+  line-height: var(--ff-lh-body);
+  color: var(--ff-fg);
+}
+.ff-body--lg    { font-size: var(--ff-size-body-lg); font-weight: var(--ff-w-light); }
+.ff-body--md    { font-size: var(--ff-size-body-md); }
+.ff-body--sm    { font-size: var(--ff-size-body-sm); }
+.ff-body--muted { color: var(--ff-fg-muted); }
+.ff-body p + p  { margin-top: 0.9em; }
+
+.ff-caption {
+  font-family: var(--ff-font-body);
+  font-size: var(--ff-size-caption);
+  line-height: 1.28;
+  color: var(--ff-fg-soft);
+}
+.ff-caption--xs { font-size: var(--ff-size-caption-xs); }
+
+/* -- Mono ---------------------------------------------------------------- */
+.ff-mono {
+  font-family: var(--ff-font-mono);
+  font-weight: var(--ff-w-regular);
+  font-size: var(--ff-size-mono-sm);
+  line-height: 1.25;
+  color: var(--ff-fg);
+}
+.ff-mono--data { font-size: var(--ff-size-mono-data); line-height: 1; letter-spacing: -0.01em; }
+.ff-mono--lg   { font-size: var(--ff-size-mono-lg); }
+.ff-mono--md   { font-size: var(--ff-size-mono-md); }
+.ff-mono--xs   { font-size: var(--ff-size-mono-xs); }
+.ff-mono--bold { font-weight: var(--ff-w-bold); }
+.ff-mono--muted{ color: var(--ff-fg-muted); }
+
+/* -- Emphasis ------------------------------------------------------------ */
+.ff-strong { font-weight: var(--ff-w-bold); }
+.ff-muted  { color: var(--ff-fg-muted); }
+.ff-acid-text { color: var(--ff-acid); }
+
+
+/* ==========================================================================
+   5. HIGHLIGHT MARKS
+   Inline blocks of colour that wrap a run of text. The single most
+   recognisable move in this identity. Use ONE per canvas.
+   ========================================================================== */
+
+.ff-mark,
+.ff-mark-ink,
+.ff-mark-white {
+  display: inline;
+  padding: 0.06em 0.22em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Marks pin both halves of their colour pair from the raw palette, so they
+   read the same in any context. Nothing overrides them. */
+
+/* Acid highlight — the default. Black text on acid. */
+.ff-mark       { background: var(--ff-acid);     color: var(--ff-ink-pure); }
+/* Black bar — white text knocked out of solid black. Used on light photography. */
+.ff-mark-ink   { background: var(--ff-ink-pure); color: var(--ff-white); }
+/* White bar — black text on white. Used on dark photography. */
+.ff-mark-white { background: var(--ff-white);    color: var(--ff-ink-pure); }
+
+/* Block-level variants that hug their text on their own line. */
+.ff-mark-block { display: table; }          /* one bar per line, shrink-to-fit */
+.ff-mark-lines > * { display: table; }      /* apply to a wrapper of lines */
+
+
+/* ==========================================================================
+   6. META BAR
+   The recurring "26.11.2026 | weXelerate, Praterstraße 1, 1020 Vienna" strip.
+   Mono, uppercase. Pick the variant that reads on the background behind it.
+   ========================================================================== */
+
+.ff-metabar {
+  display: inline-block;
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-meta);
+  font-weight: var(--ff-w-regular);
+  letter-spacing: var(--ff-track-meta);
+  line-height: 1.35;
+  text-transform: uppercase;
+  padding: 0.24em 0.42em;
+  background: var(--ff-acid);
+  color: var(--ff-ink-pure);
+}
+.ff-metabar--ink   { background: var(--ff-ink-pure); color: var(--ff-white); }
+.ff-metabar--white { background: var(--ff-white); color: var(--ff-ink-pure); }
+.ff-metabar--bare  { background: none; padding: 0; color: var(--ff-fg); }
+.ff-metabar--bold  { font-weight: var(--ff-w-bold); }
+
+
+/* ==========================================================================
+   7. BUTTONS & ARROW INDICATORS
+   ========================================================================== */
+
+.ff-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-title);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+
+  padding: 0.62em 1.5em;
+  border-radius: var(--ff-radius-pill);
+  background: var(--ff-acid);
+  color: var(--ff-ink-pure);
+  white-space: nowrap;
+}
+.ff-btn--ink   { background: var(--ff-ink-pure); color: var(--ff-white); }
+.ff-btn--ghost { background: none; color: var(--ff-fg); box-shadow: inset 0 0 0 2px currentColor; }
+.ff-btn--sm    { font-size: var(--ff-size-label); padding: 0.55em 1.3em; }
+.ff-btn--block { display: flex; width: 100%; }
+
+/* Circled arrow that sits inside a button (see the closing slide). */
+.ff-btn__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45em;
+  height: 1.45em;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px currentColor;
+  font-size: 0.82em;
+  line-height: 1;
+}
+
+/* Outlined "next slide" pill. Bottom-right of every carousel page but the last. */
+.ff-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  height: 46px;
+  border-radius: var(--ff-radius-pill);
+  box-shadow: inset 0 0 0 2px var(--ff-fg);
+  color: var(--ff-fg);
+  font-size: 26px;
+  line-height: 1;
+}
+
+
+/* ==========================================================================
+   7b. LIGHT ISLANDS
+   These surfaces are light whatever the canvas behind them is — a stat tile on
+   a dark slide, a white card on a photograph. They re-flip the semantic
+   aliases so the ordinary type classes inside them stay readable, which is why
+   none of the components below need a dark-mode variant.
+   ========================================================================== */
+
+.ff-list-row,
+.ff-stat,
+.ff-fact,
+.ff-panel,
+.ff-card,
+.ff-ticket,
+.ff-sticker,
+.ff-compare {
+  --ff-fg-strong: var(--ff-ink-pure);
+  --ff-fg:        var(--ff-ink);
+  --ff-fg-soft:   var(--ff-ink-3);
+  --ff-fg-muted:  var(--ff-ink-4);
+  --ff-border:    var(--ff-hairline);
+  color: var(--ff-fg);
+}
+
+
+/* ==========================================================================
+   8. LIST ROWS  (agenda / "what happens at #ff26")
+   ========================================================================== */
+
+.ff-list { display: flex; flex-direction: column; gap: var(--ff-space-3); }
+
+.ff-list-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: start;
+  gap: var(--ff-space-4);
+
+  padding: var(--ff-space-5) var(--ff-space-5);
+  background: var(--ff-surface);
+  border-radius: var(--ff-radius-md);
+}
+.ff-list-row--flat { background: none; padding-left: 0; padding-right: 0; }
+
+.ff-list-row__icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ff-ink-4);
+  font-size: 24px;
+  line-height: 1;
+}
+.ff-list-row__icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+.ff-list-row__label {
+  font-family: var(--ff-font-body);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-body-sm);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ff-ink-pure);
+  margin-bottom: 0.25em;
+}
+.ff-list-row__desc {
+  font-family: var(--ff-font-body);
+  font-size: var(--ff-size-body-sm);
+  line-height: 1.24;
+  color: var(--ff-ink-4);
+}
+
+/* Acid accent on a single row to mark "new" or "highlight". */
+.ff-list-row--accent { background: var(--ff-acid); }
+.ff-list-row--accent .ff-list-row__desc,
+.ff-list-row--accent .ff-list-row__icon { color: rgba(0,0,0,0.66); }
+
+
+/* ==========================================================================
+   9. STAT CARDS  ("we let the numbers speak")
+   ========================================================================== */
+
+.ff-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ff-space-4); }
+.ff-stats--2 { grid-template-columns: repeat(2, 1fr); }
+
+.ff-stat {
+  padding: var(--ff-space-5) var(--ff-space-5) var(--ff-space-6);
+  background: var(--ff-surface);
+  border: var(--ff-border-hairline);
+  border-radius: var(--ff-radius-md);
+}
+.ff-stat__value {
+  font-family: var(--ff-font-mono);
+  font-weight: var(--ff-w-regular);
+  font-size: var(--ff-size-mono-data);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ff-ink-pure);
+}
+.ff-stat__label {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ff-ink-pure);
+  margin-top: 0.28em;
+}
+.ff-stat__note {
+  font-family: var(--ff-font-body);
+  font-size: var(--ff-size-caption);
+  line-height: 1.25;
+  color: var(--ff-ink-3);
+  margin-top: 0.3em;
+}
+/* At most one stat per grid may carry the accent. */
+.ff-stat--accent { background: var(--ff-acid); border-color: var(--ff-acid); }
+.ff-stat--accent .ff-stat__note { color: rgba(0,0,0,0.7); }
+
+/* Centred fact tile (the 26.11. / 1K+ row on the closing slide). */
+.ff-fact {
+  padding: var(--ff-space-5);
+  background: var(--ff-surface);
+  border: var(--ff-border-hairline);
+  border-radius: var(--ff-radius-md);
+  text-align: center;
+}
+.ff-fact__over  { font-family: var(--ff-font-body); font-size: var(--ff-size-caption); color: var(--ff-ink-4); }
+.ff-fact__value { font-family: var(--ff-font-mono); font-weight: var(--ff-w-bold); font-size: 33px; line-height: 1.15; color: var(--ff-ink-pure); }
+.ff-fact__under { font-family: var(--ff-font-body); font-size: var(--ff-size-caption); color: var(--ff-ink-4); margin-top: 0.15em; }
+
+
+/* ==========================================================================
+   10. COMPARISON TABLE  (before vs. after)
+   ========================================================================== */
+
+.ff-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: var(--ff-border-hairline);
+  border-bottom: 0;
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-mono-md);
+  line-height: 1.22;
+}
+.ff-compare__cell {
+  position: relative;
+  padding: var(--ff-space-5) var(--ff-space-5);
+  border-bottom: var(--ff-border-hairline);
+}
+.ff-compare__cell:nth-child(odd)  { border-right: var(--ff-border-hairline); color: var(--ff-ink-4); }
+.ff-compare__cell:nth-child(even) { color: var(--ff-ink-pure); }
+
+.ff-compare__head {
+  padding: var(--ff-space-4) var(--ff-space-5);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ff-ink-pure);
+}
+.ff-compare__head--after { background: var(--ff-acid); }
+
+/* Small filled tick that overlaps the right edge of an "after" cell. */
+.ff-tick {
+  position: absolute;
+  top: var(--ff-space-4);
+  right: -14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--ff-ink-4);
+  color: var(--ff-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-font-body);
+  font-size: 17px;
+  line-height: 1;
+}
+.ff-tick--acid { background: var(--ff-acid); color: var(--ff-ink-pure); }
+
+
+/* ==========================================================================
+   11. BAR CHART  (audience breakdown)
+   ========================================================================== */
+
+.ff-bars { display: flex; flex-direction: column; gap: var(--ff-space-7); }
+
+.ff-bar { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--ff-space-5); }
+.ff-bar__label {
+  grid-column: 1 / -1;
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-mono-md);
+  color: var(--ff-ink-2);
+  margin-bottom: 0.35em;
+}
+.ff-bar--lead .ff-bar__label { font-weight: var(--ff-w-bold); color: var(--ff-ink-pure); }
+
+.ff-bar__track {
+  position: relative;
+  height: 7px;
+  border-radius: var(--ff-radius-pill);
+  background: var(--ff-surface-2);
+  overflow: hidden;
+}
+.ff-bar__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--ff-bar-value, 0%);
+  background: var(--ff-hairline-strong);
+  border-radius: var(--ff-radius-pill);
+}
+.ff-bar--lead .ff-bar__fill { background: var(--ff-acid); }
+
+.ff-bar__value {
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-mono-sm);
+  color: var(--ff-ink-4);
+  white-space: nowrap;
+  min-width: 3.2em;
+  text-align: right;
+}
+
+
+/* ==========================================================================
+   12. PANELS, CARDS, FIGURES
+   ========================================================================== */
+
+/* Bordered callout on paper. */
+.ff-panel {
+  padding: var(--ff-space-7) var(--ff-space-8);
+  background: var(--ff-surface);
+  border: var(--ff-border-hairline);
+  border-radius: var(--ff-radius-md);
+}
+.ff-panel__title {
+  font-family: var(--ff-font-mono);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-mono-md);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-ink-pure);
+  margin-bottom: 0.5em;
+}
+
+/* Solid white card that floats over photography (venue slide). */
+.ff-card {
+  background: var(--ff-white);
+  color: var(--ff-ink);
+  border-radius: var(--ff-radius-md);
+  padding: var(--ff-space-7) var(--ff-space-8);
+}
+.ff-card--tight { padding: var(--ff-space-5) var(--ff-space-6); }
+
+/* Photography block inside a padded layout. */
+.ff-figure { overflow: hidden; border-radius: var(--ff-radius-sm); }
+.ff-figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ff-figure--square { aspect-ratio: 1 / 1; }
+.ff-figure--4x3    { aspect-ratio: 4 / 3; }
+.ff-figure--16x9   { aspect-ratio: 16 / 9; }
+.ff-figure--3x2    { aspect-ratio: 3 / 2; }
+
+
+/* ==========================================================================
+   13. TICKET CARD
+   ========================================================================== */
+
+.ff-ticket {
+  border: var(--ff-border-ink);
+  background: var(--ff-white);
+  overflow: hidden;
+}
+.ff-ticket__flag {
+  background: var(--ff-ink-pure);
+  color: var(--ff-white);
+  font-family: var(--ff-font-body);
+  font-weight: var(--ff-w-bold);
+  font-size: var(--ff-size-body-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: var(--ff-space-4) var(--ff-space-5);
+}
+.ff-ticket__flag--acid { background: var(--ff-acid); color: var(--ff-ink-pure); }
+.ff-ticket__body { padding: var(--ff-space-7) var(--ff-space-8) var(--ff-space-8); }
+
+.ff-ticket__kicker {
+  display: inline-block;
+  background: var(--ff-surface-2);
+  font-family: var(--ff-font-body);
+  font-weight: var(--ff-w-medium);
+  font-size: var(--ff-size-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ff-ink-2);
+  padding: 0.5em 0.9em;
+}
+.ff-ticket__name {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-semibold);
+  font-size: 34px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--ff-ink-pure);
+  margin-top: 0.5em;
+}
+.ff-ticket__sub { font-family: var(--ff-font-body); font-size: var(--ff-size-body-sm); color: var(--ff-ink-3); margin-top: 0.4em; }
+
+.ff-rule-dashed {
+  height: 0;
+  border-top: 2px dashed var(--ff-hairline-strong);
+  margin: var(--ff-space-6) 0;
+}
+
+.ff-checklist { display: flex; flex-direction: column; gap: var(--ff-space-3); }
+.ff-checklist li {
+  display: flex;
+  gap: 0.6em;
+  font-family: var(--ff-font-body);
+  font-size: var(--ff-size-body-sm);
+  color: var(--ff-ink-2);
+}
+.ff-checklist li::before { content: "✓"; color: var(--ff-ink-pure); font-weight: var(--ff-w-bold); }
+
+
+/* ==========================================================================
+   14. STICKER  (hand-written aside, e.g. "don't miss the launch deal")
+   Use at most once per carousel. It is the brand's only informal voice.
+   ========================================================================== */
+
+.ff-sticker {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: var(--ff-white);
+  color: var(--ff-ink-pure);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15em;
+  text-align: center;
+  padding: var(--ff-space-6);
+
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-mono-sm);
+  line-height: 1.35;
+  transform: rotate(-6deg);
+}
+.ff-sticker mark { background: var(--ff-acid); color: inherit; padding: 0 0.15em; }
+
+
+/* ==========================================================================
+   15. LOGO & LOCKUPS
+   ========================================================================== */
+
+.ff-logo      { height: 58px; width: auto; }
+.ff-logo--sm  { height: 42px; }
+.ff-logo--lg  { height: 104px; }
+.ff-logo--hero{ height: 190px; }
+.ff-mark-img  { height: 52px; width: auto; }
+
+/* "the yearly flagship event by [weXelerate]" */
+.ff-lockup { display: flex; flex-direction: column; gap: 0.35em; align-items: flex-start; }
+.ff-lockup__kicker {
+  font-family: var(--ff-font-mono);
+  font-size: var(--ff-size-caption);
+  line-height: 1.25;
+  color: var(--ff-fg);
+  opacity: 0.85;
+}
+.ff-lockup__logo { height: 26px; width: auto; }
+
+/* Standard carousel footer: centred logo, optional next-pill on the right. */
+.ff-footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding-top: var(--ff-space-6);
+}
+.ff-footer > :first-child { justify-self: start; }
+.ff-footer > :last-child  { justify-self: end; }
+.ff-footer__center { justify-self: center; }
+
+.ff-url {
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-bold);
+  font-size: 26px;
+  letter-spacing: -0.005em;
+  color: var(--ff-fg);
+}
+
+
+/* ==========================================================================
+   16. SOCIAL FOLLOW BLOCK
+   ========================================================================== */
+
+.ff-social { display: flex; gap: var(--ff-space-4); align-items: flex-start; }
+.ff-social__icons { display: flex; flex-direction: column; gap: 6px; }
+.ff-social__icons img,
+.ff-social__icons svg { width: 30px; height: 30px; }
+.ff-social__text { font-family: var(--ff-font-body); font-size: var(--ff-size-caption); line-height: 1.3; }
+
+
+/* ==========================================================================
+   17. STEP LIST  (connect / learn / act)
+   Display words in knocked-out bars with a rule leading into them.
+   ========================================================================== */
+
+.ff-steps { display: flex; flex-direction: column; gap: var(--ff-space-7); }
+.ff-step  { display: grid; grid-template-columns: 78px 1fr; align-items: start; gap: var(--ff-space-4); }
+.ff-step__arrow { font-size: 34px; line-height: 1.1; color: var(--ff-fg); }
+.ff-step__word {
+  display: table;
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-semibold);
+  font-size: var(--ff-size-headline);
+  letter-spacing: var(--ff-track-tight);
+  text-transform: uppercase;
+  background: var(--ff-white);
+  color: var(--ff-ink-pure);
+  padding: 0.04em 0.16em;
+}
+.ff-step__desc {
+  display: table;
+  margin-top: 0.4em;
+  font-family: var(--ff-font-display);
+  font-weight: var(--ff-w-regular);
+  font-size: var(--ff-size-body);
+  background: var(--ff-white);
+  color: var(--ff-ink-pure);
+  padding: 0.14em 0.24em;
+}
+/* Acid variant for the step you want to lead with. */
+.ff-step--accent .ff-step__word { background: var(--ff-acid); }
+
+
+/* ==========================================================================
+   18. UTILITIES
+   ========================================================================== */
+
+.ff-u-center      { text-align: center; }
+.ff-u-right       { text-align: left; }
+.ff-u-white       { color: var(--ff-white); }
+.ff-u-ink         { color: var(--ff-ink-pure); }
+.ff-u-acid        { color: var(--ff-acid); }
+.ff-u-bg-acid     { background: var(--ff-acid); }
+.ff-u-bg-ink      { background: var(--ff-ink-pure); }
+.ff-u-bg-surface  { background: var(--ff-surface); }
+.ff-u-nowrap      { white-space: nowrap; }
+.ff-u-balance     { text-wrap: balance; }
+.ff-u-hairline    { border-top: var(--ff-border-hairline); }
+
+.ff-u-mt-2 { margin-top: var(--ff-space-2); }
+.ff-u-mt-4 { margin-top: var(--ff-space-4); }
+.ff-u-mt-5 { margin-top: var(--ff-space-5); }
+.ff-u-mt-6 { margin-top: var(--ff-space-6); }
+.ff-u-mt-8 { margin-top: var(--ff-space-8); }
+.ff-u-mt-10{ margin-top: var(--ff-space-10); }
+
+/* Put on any wrapper sitting over a photograph. Lifts it above the bleed and
+   scrim layers and flips the semantic aliases (see tokens.css) so every type
+   class inside it reads light. Use this instead of an inline `color: #fff`. */
+.ff-on-photo { position: relative; z-index: 2; color: var(--ff-fg); }

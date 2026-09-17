@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FF26 · content-fit check</title>
+<style>
+  body { font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 32px; background: #111; color: #eee; }
+  h1 { font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: #DCFF00; }
+  pre { white-space: pre-wrap; }
+  .ok   { color: #8BC34A; }
+  .warn { color: #FFC107; }
+  .bad  { color: #FF5252; }
+  iframe { position: absolute; left: -10000px; top: 0; border: 0; }
+</style>
+</head>
+<body>
+
+<!--
+  Content-fit check.
+
+  Every .ff-canvas has `overflow: hidden`, so copy that runs too long does not
+  throw — it silently vanishes off the bottom edge. This harness loads each
+  template in an offscreen same-origin iframe, measures every laid-out element
+  against the canvas box, and reports the worst overrun.
+
+  Serve the repo (tools/serve.sh) and open http://localhost:8777/tools/check.html
+  Or run it headlessly:
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --virtual-time-budget=25000 --dump-dom \
+      http://localhost:8777/tools/check.html | sed -n '/<pre id="report"/,/<\/pre>/p'
+-->
+
+<h1>FF26 · content-fit check</h1>
+<pre id="report">running…</pre>
+
+<script>
+const TEMPLATES = [
+  '01-cover-photo.html', '02-statement.html', '03-agenda-list.html',
+  '04-before-after.html', '05-stats.html', '06-bar-chart.html',
+  '07-photo-steps.html', '08-dark-photo-info.html', '09-ticket-offer.html',
+  '10-cta-closing.html', '11-photo-closing.html', '12-speaker-card.html',
+  '13-quote.html', '14-story-9x16.html', '15-square-announce.html',
+  '16-linkedin-cover.html',
+];
+
+// Anything overhanging by more than this is a real bug rather than a rounding
+// artefact from a transform or a descender.
+const TOLERANCE = 2;
+
+function measure(doc) {
+  const c = doc.querySelector('.ff-canvas');
+  if (!c) return { error: 'no .ff-canvas' };
+  const box = c.getBoundingClientRect();
+  let worst = 0, culprit = null, side = null;
+  for (const el of c.querySelectorAll('*')) {
+    const cs = doc.defaultView.getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+    // Elements inside their own overflow:hidden box are clipped on purpose.
+    let clipped = false;
+    for (let p = el.parentElement; p && p !== c; p = p.parentElement) {
+      if (doc.defaultView.getComputedStyle(p).overflow !== 'visible') { clipped = true; break; }
+    }
+    if (clipped) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) continue;
+    const overs = {
+      bottom: r.bottom - box.bottom,
+      top:    box.top   - r.top,
+      right:  r.right   - box.right,
+      left:   box.left  - r.left,
+    };
+    for (const [k, v] of Object.entries(overs)) {
+      if (v > worst) { worst = v; culprit = el.className || el.tagName; side = k; }
+    }
+  }
+  return {
+    size: Math.round(box.width) + '×' + Math.round(box.height),
+    over: Math.round(worst),
+    side,
+    culprit: worst > TOLERANCE ? String(culprit).trim().slice(0, 64) : null,
+  };
+}
+
+function load(src) {
+  return new Promise(resolve => {
+    const f = document.createElement('iframe');
+    f.width = 2200; f.height = 2200; f.src = src;
+    f.onload = async () => {
+      try { await f.contentDocument.fonts.ready; } catch {}
+      // One more frame so the condensed serif has actually reflowed.
+      await new Promise(r => setTimeout(r, 250));
+      let res;
+      try { res = measure(f.contentDocument); }
+      catch (e) { res = { error: String(e) }; }
+      f.remove();
+      resolve(res);
+    };
+    f.onerror = () => { f.remove(); resolve({ error: 'failed to load' }); };
+    document.body.appendChild(f);
+  });
+}
+
+(async () => {
+  const lines = [];
+  let bad = 0;
+  for (const t of TEMPLATES) {
+    const r = await load('../templates/' + t);
+    const name = t.padEnd(26);
+    if (r.error) { lines.push(`BAD  ${name} ${r.error}`); bad++; continue; }
+    if (r.over > TOLERANCE) {
+      lines.push(`BAD  ${name} ${r.size.padEnd(11)} overflows ${r.side} by ${r.over}px  → ${r.culprit}`);
+      bad++;
+    } else {
+      lines.push(`OK   ${name} ${r.size.padEnd(11)} fits`);
+    }
+  }
+  lines.push('');
+  lines.push(bad === 0 ? `PASS — all ${TEMPLATES.length} templates fit their canvas.`
+                       : `FAIL — ${bad} of ${TEMPLATES.length} templates overflow.`);
+  const pre = document.getElementById('report');
+  pre.textContent = lines.join('\n');
+  pre.className = bad === 0 ? 'ok' : 'bad';
+  document.title = bad === 0 ? 'FF26 check: PASS' : `FF26 check: ${bad} FAIL`;
+})();
+</script>
+
+</body>
+</html>

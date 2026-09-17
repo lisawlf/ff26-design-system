@@ -1,0 +1,30 @@
+name: check
+
+# Canvases are overflow:hidden, so copy that runs too long vanishes off the
+# bottom edge instead of erroring. This runs the same fit check as
+# ./tools/check.sh on every push, so a template can never silently regress.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Serve the design system
+        run: |
+          python3 -m http.server 8777 --directory . &
+          for i in $(seq 1 30); do
+            curl -sf -o /dev/null http://localhost:8777/tokens/tokens.css && break
+            sleep 0.5
+          done
+
+      - name: Content-fit check
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: ./tools/check.sh
