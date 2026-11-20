@@ -125,7 +125,7 @@ announcement are the same layout with different words.
 
 ## Partner logos
 
-`assets/partners/` holds all 35 Future Forward 2026 partner logos, numbered in
+`assets/partners/` holds all 36 Future Forward 2026 partner logos, numbered in
 the official order and grouped by tier (`corporate/`, `event/`,
 `supporting/`). `assets/partners/partners.json` is the list. Always on a white
 panel, always in that order. See [CLAUDE.md §11](CLAUDE.md).

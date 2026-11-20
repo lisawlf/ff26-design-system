@@ -68,10 +68,10 @@ it on the cover slide and on host/venue slides — not on every page.
 official order:
 
 - `corporate/` 01 Genesys · 02 FFG · 03 GIN · 04 wonderful.ai
-- `event/` 01 Vienna Business Agency · 02 UNIQA Sustainable · 03 Embassy of
-  Latvia · 04 LIAA · 05 UNIDO · 06 AIM Global · 07 Raiffeisen Bank International ·
-  08 Elevator Ventures · 09 Bluecode · 10 Loom Ventures · 11 Nobile ·
-  12 Energiespeicher Österreich · 13 ACTIU
+- `event/` 01 Vienna Business Agency · 02 Vienna Region · 03 UNIQA Sustainable ·
+  04 Embassy of Latvia · 05 LIAA · 06 UNIDO · 07 AIM Global · 08 Raiffeisen Bank
+  International · 09 Elevator Ventures · 10 Bluecode · 11 Loom Ventures ·
+  12 Nobile · 13 Energiespeicher Österreich · 14 ACTIU
 - `supporting/` 01 The Energy Bridge · 02 AI Austria · 03 Die Presse ·
   04 Brutkasten · 05 b2match · 06 LUME · 07 Ottakringer · 08 Vöslauer ·
   09 Bacardi · 10 SO/ Vienna · 11 NEOH · 12 Lemonaid · 13 Soulxcoffee ·

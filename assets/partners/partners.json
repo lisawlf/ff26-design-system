@@ -1,5 +1,5 @@
 {
-  "$description": "Future Forward 2026 partners, in the official order. Source: Notion 'Sponsors (Marketing View)', checked 2026-11-20. Always show the tiers in this order (corporate, event, supporting) and the logos in the order listed. Every logo is made for a white panel; 'opaque' marks files with a white background baked in, so they only work on white.",
+  "$description": "Future Forward 2026 partners, in the official order. Source: Notion 'Sponsors (Marketing View)', checked 2026-11-20, plus Vienna Region (event partner, as in the posted FF26 partner post). Always show the tiers in this order (corporate, event, supporting) and the logos in the order listed. Every logo is made for a white panel; 'opaque' marks files with a white background baked in, so they only work on white.",
   "event": "Future Forward 2026",
   "updated": "2026-11-20",
   "tiers": [
@@ -18,18 +18,19 @@
       "label": "Event Partners",
       "partners": [
         { "name": "VBA (Vienna Business Agency)", "logo": "event/01-vba.webp" },
-        { "name": "UNIQA Sustainable", "logo": "event/02-uniqa-sustainable.webp" },
-        { "name": "Embassy of the Republic of Latvia to the Republic of Austria", "logo": "event/03-embassy-of-latvia.webp", "opaque": true },
-        { "name": "Investment and Development Agency of Latvia (LIAA)", "logo": "event/04-liaa.webp" },
-        { "name": "UNIDO", "logo": "event/05-unido.webp" },
-        { "name": "AIM Global", "logo": "event/06-aim-global.webp" },
-        { "name": "Raiffeisen Bank International", "logo": "event/07-raiffeisen-bank-international.webp", "opaque": true },
-        { "name": "Elevator Ventures", "logo": "event/08-elevator-ventures.webp" },
-        { "name": "Bluecode", "logo": "event/09-bluecode.webp" },
-        { "name": "Loom Ventures", "logo": "event/10-loom-ventures.webp", "opaque": true },
-        { "name": "Nobile", "logo": "event/11-nobile.webp" },
-        { "name": "Energiespeicher Österreich", "logo": "event/12-energiespeicher-oesterreich.webp" },
-        { "name": "ACTIU", "logo": "event/13-actiu.webp" }
+        { "name": "Vienna Region", "logo": "event/02-vienna-region.svg" },
+        { "name": "UNIQA Sustainable", "logo": "event/03-uniqa-sustainable.webp" },
+        { "name": "Embassy of the Republic of Latvia to the Republic of Austria", "logo": "event/04-embassy-of-latvia.webp", "opaque": true },
+        { "name": "Investment and Development Agency of Latvia (LIAA)", "logo": "event/05-liaa.webp" },
+        { "name": "UNIDO", "logo": "event/06-unido.webp" },
+        { "name": "AIM Global", "logo": "event/07-aim-global.webp" },
+        { "name": "Raiffeisen Bank International", "logo": "event/08-raiffeisen-bank-international.webp", "opaque": true },
+        { "name": "Elevator Ventures", "logo": "event/09-elevator-ventures.webp" },
+        { "name": "Bluecode", "logo": "event/10-bluecode.webp" },
+        { "name": "Loom Ventures", "logo": "event/11-loom-ventures.webp", "opaque": true },
+        { "name": "Nobile", "logo": "event/12-nobile.webp" },
+        { "name": "Energiespeicher Österreich", "logo": "event/13-energiespeicher-oesterreich.webp" },
+        { "name": "ACTIU", "logo": "event/14-actiu.webp" }
       ]
     },
     {
