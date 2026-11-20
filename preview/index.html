@@ -306,9 +306,9 @@
   <!-- ==================================================================== -->
   <h2 class="sec">Templates</h2>
   <p class="note">
-    Sixteen ready-to-fill layouts. Templates 01–11 recreate the launch deck slide for
+    Eighteen ready-to-fill layouts. Templates 01–11 recreate the launch deck slide for
     slide; 12–16 extend the same parts to speakers, quotes, stories, squares and the
-    LinkedIn cover. Open one, replace the copy, export. Each tile links to its file.
+    LinkedIn cover; 17–18 add the partner wall and the navy earth look. Open one, replace the copy, export. Each tile links to its file.
   </p>
   <div class="gallery" id="gallery"></div>
 
@@ -355,6 +355,9 @@ const COLORS = [
   ['Hairline',        '#E8E8E8', '--ff-hairline'],
   ['Hairline strong', '#D8D8D8', '--ff-hairline-strong'],
   ['White',           '#FFFFFF', '--ff-white'],
+  ['Navy ink',        '#08111F', '--ff-navy-ink'],
+  ['Navy',            '#0F1D33', '--ff-navy'],
+  ['Navy glow',       '#263961', '--ff-navy-glow'],
 ];
 document.getElementById('swatches').innerHTML = COLORS.map(([n,hex,v]) => `
   <div class="sw">
@@ -379,6 +382,8 @@ const TEMPLATES = [
   ['14-story-9x16.html',      'Story (9:16)',       1080, 1920],
   ['15-square-announce.html', 'Square (1:1)',       1080, 1080],
   ['16-linkedin-cover.html',  'LinkedIn cover',     1584, 396 ],
+  ['17-partner-wall.html',    'Partner wall',       1080, 1350],
+  ['18-navy-earth-hero.html', 'Navy earth hero',    1080, 1350],
 ];
 
 document.getElementById('gallery').innerHTML = TEMPLATES.map(([file,name,w,h]) => {

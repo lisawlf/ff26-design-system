@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FF26 · 18 Navy earth hero</title>
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/ff26.css">
+<style>
+  body { margin: 0; background: #1a1a1a; }
+  .nh__card { position: relative; border: 2px solid rgba(255,255,255,0.18); border-radius: 18px; padding: 10px; }
+  .nh__card .ff-figure, .nh__card img { border-radius: 10px; height: 440px; width: 100%; object-fit: cover; }
+  .nh__sticker { position: absolute; right: -6px; bottom: -22px; }
+  .nh__next { width: 64px; height: 64px; border: 2px solid var(--ff-white); border-radius: 50%;
+              display: flex; align-items: center; justify-content: center; font-size: 30px; }
+</style>
+</head>
+<body>
+
+<!-- 4:5 · Navy hero, as in "What's included in your ticket?" and "Share your
+     attendance". Black space fading into navy, mono ticker rows, an earth or
+     astronaut photo in a framed card, Sora headline, mono chips. No serif.
+     The acid sticker is the one acid element; if you use acid in the
+     headline instead, drop the sticker. -->
+<div class="ff-canvas ff-canvas--4x5 ff-canvas--navy">
+
+  <div class="ff-ticker ff-ticker--top">26.11.26 · Vienna · Meet me at #FF26 · 26.11.26 · Vienna · Meet me at #FF26 · 26.11.26 · Vienna ·</div>
+
+  <div class="ff-pad ff-on-photo" style="padding-top: 116px; padding-bottom: 104px;">
+
+    <div class="ff-row" style="justify-content: space-between; align-items: flex-start;">
+      <p class="ff-mono ff-mono--xs" style="letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.5;">Thursday 26 November 2026<br>weXelerate, Vienna</p>
+      <img class="ff-logo ff-logo--sm" src="../assets/logo/ff-logo-white.png" alt="Future Forward">
+    </div>
+
+    <div class="nh__card ff-u-mt-8">
+      <img src="../assets/photos/astronaut-earth.jpg" alt="">
+      <span class="ff-tag ff-tag--acid nh__sticker">4 tickets</span>
+    </div>
+
+    <h1 class="ff-display ff-display--sm ff-u-mt-10">What's included<br>in your ticket?</h1>
+
+    <div class="ff-chips ff-u-mt-6">
+      <span class="ff-chip">Founder · €89</span>
+      <span class="ff-chip">Full-day · €299</span>
+      <span class="ff-chip">VIP · €499</span>
+      <span class="ff-chip">Party-only · €29</span>
+    </div>
+
+    <div class="ff-spacer"></div>
+
+    <div class="ff-row" style="justify-content: space-between; align-items: center;">
+      <p class="ff-mono ff-mono--xs" style="letter-spacing: 0.14em; text-transform: uppercase;">Swipe to compare</p>
+      <span class="nh__next">→</span>
+    </div>
+
+  </div>
+
+  <div class="ff-ticker ff-ticker--bottom">See you there? · #FutureForward2026 · See you there? · #FutureForward2026 · See you there? ·</div>
+</div>
+
+</body>
+</html>

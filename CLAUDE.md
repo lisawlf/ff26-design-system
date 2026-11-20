@@ -44,6 +44,8 @@ and a partner announcement are the same layout with different words.
 | Instagram or LinkedIn story | `14-story-9x16.html` |
 | Single square post | `15-square-announce.html` |
 | LinkedIn page or event cover | `16-linkedin-cover.html` |
+| Partner thank-you, any "all our partners" slide | `17-partner-wall.html` |
+| Dark hero on the earth/astronaut look, tickets, chips | `18-navy-earth-hero.html` |
 
 A LinkedIn carousel is 4–10 of the 4:5 templates in sequence. The convention is:
 `01` opener → content slides → `09` or `10` closer. Every slide but the last
@@ -81,15 +83,17 @@ Almost every on-brand layout is these five, in this order, top to bottom:
 ```html
 <p class="ff-eyebrow">2025 edition</p>                     <!-- mono, wide tracking, muted -->
 <h1 class="ff-display">We let the numbers speak</h1>       <!-- Sora, uppercase, huge, tight -->
-<p class="ff-lede">Our attendees leave the event changed.</p>  <!-- condensed serif, ONE line -->
+<p class="ff-lede">Our attendees leave the event changed.</p>  <!-- OPTIONAL condensed serif, see below -->
 <p class="ff-body">Supporting sentence or two in Barlow.</p>
 <span class="ff-metabar">26.11.2026&nbsp;|&nbsp;weXelerate, Vienna</span>
 ```
 
 - The **eyebrow** names the section. It gets an em dash automatically — don't type one.
 - The **display** headline is the only loud thing. Uppercase, two or three short lines.
-- The **serif lede** is the single warm line. Sentence case, one line, two at most.
-  Use `<em>` for exactly one emphasised phrase.
+- The **serif lede** is optional and used sparingly. The published #FF26 posts
+  mostly skip it: headline → Barlow or mono line is the default. Use the serif at
+  most once per carousel, for one warm line. Sentence case, one line, two at most,
+  one `<em>`. Never on navy / earth posts.
 - **Body** explains. Three lines is plenty.
 - The **meta bar** carries date and venue. Put it on the first and last slide.
 
@@ -105,6 +109,27 @@ Never use acid as a page background, for body copy, or for the logo.
 
 Backgrounds are off-white `#FAFAFA`, not pure white. Pure white is for cards
 sitting on photographs.
+
+### Navy: the second dark look
+
+Most dark #FF26 posts are not flat black. They sit on the earth/astronaut
+photography (`assets/photos/earth-moon.jpg`, `astronaut-earth.jpg`,
+`hero-moon.jpg`) and fade from black space into a deep ink navy:
+
+| Token | Hex | Use |
+|---|---|---|
+| `--ff-navy-ink` | `#08111F` | base of the navy canvas |
+| `--ff-navy` | `#0F1D33` | panels and outlined boxes on navy |
+| `--ff-navy-glow` | `#263961` | the horizon glow at the bottom |
+| `--ff-grad-earth` | black → navy-ink → navy-glow | the only gradient allowed |
+
+Use `.ff-canvas--navy` (reads light, like `--dark`). Over an earth photo, add
+`.ff-scrim--earth` to fade the bottom into navy. Navy is a background only:
+never text, never a button. Acid stays the one accent on navy too.
+Parts that belong to this look: `.ff-ticker` (spaced mono row along the top or
+bottom edge), `.ff-chip` (outlined mono pill, e.g. "VIP · €499"), `.ff-tag`
+(white mono label, `.ff-tag--acid` for a rotated acid sticker),
+`.ff-stepbox-row` (01 / 02 / 03 boxes). See `18-navy-earth-hero.html`.
 
 ### Context, never inline colour
 
@@ -214,7 +239,8 @@ Full guidance and caption scaffolding: `docs/07-voice-and-copy.md`.
 
 ## 10. Hard don'ts
 
-- No fifth typeface, no gradient fills, no drop shadows, no rounded-corner photos
+- No fifth typeface, no gradient fills (the one exception is `--ff-grad-earth`
+  as a canvas background), no drop shadows, no rounded-corner photos
   beyond `--ff-radius-sm`.
 - Don't recolour, stretch, outline or box the logo. Black or white only.
 - Don't set the serif in uppercase, or the display in sentence case.
@@ -224,3 +250,24 @@ Full guidance and caption scaffolding: `docs/07-voice-and-copy.md`.
   system lacks, add a template-local `<style>` block for **layout only** — position,
   size, grid. Colour, type and spacing come from tokens.
 - Don't hardcode a hex value. Every colour has a token.
+
+---
+
+## 11. Partner logos
+
+All Future Forward 2026 partner logos are in `assets/partners/`, numbered in
+the official order, with `assets/partners/partners.json` as the list
+(source: the Notion "Sponsors (Marketing View)" page).
+
+- Tiers always run **Corporate → Event → Supporting**, logos in file-number
+  order. Don't reorder, don't promote a partner to a higher tier, don't leave
+  one out of an "all partners" graphic.
+- Partner logos always sit on a **white panel** (`.ff-partners`). Several files
+  have a white background baked in (`"opaque": true` in the JSON), so they
+  break on navy or a photo. Only exception: `corporate/01-genesys_white-on-dark.svg`.
+- Never recolour, crop or stretch a partner logo. Logos sit in equal boxes with
+  `object-fit: contain`. Change `--cols` / `--h` on `.ff-partners__grid` to
+  resize the grid.
+- Start from `templates/17-partner-wall.html`. For a single partner
+  announcement, use `12-speaker-card.html` and put the logo on a white card.
+- Partner list changed? Update the JSON and the files, keeping the numbering.

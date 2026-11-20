@@ -32,6 +32,15 @@
 
   --ff-linkedin:        #0A66C2;
 
+  /* --- Navy (the earth-from-space backgrounds) ---------------------------
+     The dark posts are not flat black: they sit on the earth/astronaut
+     photography and fade from black into a deep ink navy. These three tones
+     are sampled from those posts. Navy is a background, never text. */
+  --ff-navy-ink:        #08111F;
+  --ff-navy:            #0F1D33;
+  --ff-navy-glow:       #263961;
+  --ff-grad-earth:      linear-gradient(180deg, #000000 0%, #000000 30%, #08111F 62%, #263961 100%);
+
   /* --- Semantic aliases --------------------------------------------------
      Every component colours itself from these four, never from the raw
      palette. Flipping the context (see the .ff-dark block at the bottom of
@@ -152,6 +161,7 @@
 .ff-dark,
 .ff-canvas--dark,
 .ff-canvas--black,
+.ff-canvas--navy,
 .ff-on-photo {
   --ff-bg:          var(--ff-ink);
   --ff-fg-strong:   var(--ff-white);

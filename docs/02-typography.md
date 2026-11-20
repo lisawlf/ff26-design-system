@@ -47,7 +47,10 @@ unresolved; four looks like body copy.
 ## Noto Serif Display — the lede
 
 One line of condensed serif under the headline. It is the only warmth in the
-system, which is exactly why it must stay rare.
+system, which is exactly why it must stay rare. **It is optional.** The
+published #FF26 posts mostly do without it: Sora headline, then a Barlow or
+mono line. Use it at most once per carousel, never on the navy/earth posts, and
+never just to fill space.
 
 ```html
 <p class="ff-lede">Our attendees leave the event changed.</p>

@@ -60,6 +60,29 @@ as actual objects.
 
 ---
 
+## Navy (the earth posts)
+
+The dark #FF26 posts sit on earth-from-the-moon photography and fade from black
+space into an ink navy. These tones are sampled from the published posts.
+
+| Token | Hex | Use |
+|---|---|---|
+| `--ff-navy-ink` | `#08111F` | Base of `.ff-canvas--navy` |
+| `--ff-navy` | `#0F1D33` | Panels and outlined boxes on navy |
+| `--ff-navy-glow` | `#263961` | Horizon glow at the bottom of the canvas |
+| `--ff-grad-earth` | `#000` → `#08111F` → `#263961`, top to bottom | The canvas background |
+
+Rules: navy is only ever a background. Text on navy is white or white at
+72–88 %; the accent on navy is still acid, still once. The earth gradient is the
+only gradient in the system, and only as a canvas background. Over an earth
+photo, `.ff-scrim--earth` fades the lower part into navy so cards and copy can
+sit below the horizon.
+
+Photos for this look: `assets/photos/earth-moon.jpg`,
+`assets/photos/astronaut-earth.jpg`, `assets/photos/hero-moon.jpg`.
+
+---
+
 ## Context tokens — how colour actually gets applied
 
 Components never name a palette colour for text. They use four semantic

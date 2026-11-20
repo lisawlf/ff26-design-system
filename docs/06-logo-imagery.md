@@ -62,6 +62,33 @@ it on the cover slide and on host/venue slides — not on every page.
 
 ---
 
+## Partner logos
+
+`assets/partners/` has every Future Forward 2026 partner, numbered in the
+official order:
+
+- `corporate/` 01 Genesys · 02 FFG · 03 GIN · 04 wonderful.ai
+- `event/` 01 Vienna Business Agency · 02 UNIQA Sustainable · 03 Embassy of
+  Latvia · 04 LIAA · 05 UNIDO · 06 AIM Global · 07 Raiffeisen Bank International ·
+  08 Elevator Ventures · 09 Bluecode · 10 Loom Ventures · 11 Nobile ·
+  12 Energiespeicher Österreich · 13 ACTIU
+- `supporting/` 01 The Energy Bridge · 02 AI Austria · 03 Die Presse ·
+  04 Brutkasten · 05 b2match · 06 LUME · 07 Ottakringer · 08 Vöslauer ·
+  09 Bacardi · 10 SO/ Vienna · 11 NEOH · 12 Lemonaid · 13 Soulxcoffee ·
+  14 NUCAO · 15 Hitschies · 16 Leuchtbuchstaben.at · 17 vrei · 18 Game City
+
+`partners.json` has the same list in machine-readable form. Rules:
+
+- Tier order is fixed: corporate, event, supporting. Logo order within a tier is
+  the file number.
+- Always on a white panel (`.ff-partners`). Files marked `"opaque": true` have a
+  white background baked in.
+- Don't recolour, crop, outline or stretch partner logos. The only light
+  version is `corporate/01-genesys_white-on-dark.svg`.
+- Template: `templates/17-partner-wall.html`.
+
+---
+
 ## Photography
 
 The library in `assets/photos/` is real Future Forward event photography. Use

@@ -48,7 +48,8 @@ css/
 templates/           16 ready-to-fill layouts (see below)
 assets/
   logo/              Future Forward + weXelerate marks, black and white
-  photos/            event photography, optimised
+  partners/          every FF26 partner logo, in official order + partners.json
+  photos/            event photography + earth/astronaut backgrounds
 docs/                brand documentation
 preview/index.html   living styleguide — every token and component, rendered
 tools/               serve · check · export
@@ -60,7 +61,8 @@ CLAUDE.md            operating manual for building graphics with Claude
 ## The system in one screen
 
 **Colour.** Acid `#DCFF00`, ink `#0E0E0E`, off-white paper `#FAFAFA`, a short
-grey ramp. **One acid element per canvas** — a highlight, a button, a table
+grey ramp, and an ink navy (`#08111F` → `#263961`) for the dark posts that sit
+on the earth/astronaut photography. **One acid element per canvas** — a highlight, a button, a table
 header, or one chart bar. Never a background, never body copy.
 
 **Type.** Four families, four jobs:
@@ -68,7 +70,7 @@ header, or one chart bar. Never a background, never body copy.
 | | |
 |---|---|
 | **Sora** | Display headlines. Uppercase, tight, leading below 1.0 |
-| **Noto Serif Display** | The one condensed-serif lede line under a headline |
+| **Noto Serif Display** | Optional, sparing: at most one warm lede line per carousel |
 | **Barlow** | All running copy |
 | **JetBrains Mono** | Eyebrows, dates, venue, every number |
 
@@ -113,9 +115,26 @@ speakers, quotes and the other formats.
 | 14 | `14-story-9x16` | 9:16 | Story |
 | 15 | `15-square-announce` | 1:1 | Single square post |
 | 16 | `16-linkedin-cover` | 1584×396 | LinkedIn page / event cover |
+| 17 | `17-partner-wall` | 4:5 | All partners: corporate → event → supporting |
+| 18 | `18-navy-earth-hero` | 4:5 | Navy earth look: ticker, photo card, chips |
 
 Pick by **structure**, not topic: a speaker announcement and a partner
 announcement are the same layout with different words.
+
+---
+
+## Partner logos
+
+`assets/partners/` holds all 35 Future Forward 2026 partner logos, numbered in
+the official order and grouped by tier (`corporate/`, `event/`,
+`supporting/`). `assets/partners/partners.json` is the list. Always on a white
+panel, always in that order. See [CLAUDE.md §11](CLAUDE.md).
+
+## Using this with Claude
+
+Give Claude the repo link and say what you need ("a 4:5 post thanking our
+partners", "a story announcing the VIP ticket"). Claude reads `CLAUDE.md`,
+picks a template, fills it in and exports a PNG.
 
 ---
 

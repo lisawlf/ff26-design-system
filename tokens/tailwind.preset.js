@@ -29,6 +29,9 @@ module.exports = {
           hairline: '#E8E8E8',
           'hairline-strong': '#D8D8D8',
           white: '#FFFFFF',
+          'navy-ink': '#08111F',
+          navy: '#0F1D33',
+          'navy-glow': '#263961',
         },
       },
 

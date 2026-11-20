@@ -1,0 +1,60 @@
+{
+  "$description": "Future Forward 2026 partners, in the official order. Source: Notion 'Sponsors (Marketing View)', checked 2026-11-20. Always show the tiers in this order (corporate, event, supporting) and the logos in the order listed. Every logo is made for a white panel; 'opaque' marks files with a white background baked in, so they only work on white.",
+  "event": "Future Forward 2026",
+  "updated": "2026-11-20",
+  "tiers": [
+    {
+      "id": "corporate",
+      "label": "Corporate Partners",
+      "partners": [
+        { "name": "Genesys", "logo": "corporate/01-genesys.svg", "logoOnDark": "corporate/01-genesys_white-on-dark.svg" },
+        { "name": "FFG", "logo": "corporate/02-ffg.webp", "opaque": true },
+        { "name": "GIN (Global Incubator Network)", "logo": "corporate/03-gin.svg" },
+        { "name": "wonderful.ai", "logo": "corporate/04-wonderful-ai.webp" }
+      ]
+    },
+    {
+      "id": "event",
+      "label": "Event Partners",
+      "partners": [
+        { "name": "VBA (Vienna Business Agency)", "logo": "event/01-vba.webp" },
+        { "name": "UNIQA Sustainable", "logo": "event/02-uniqa-sustainable.webp" },
+        { "name": "Embassy of the Republic of Latvia to the Republic of Austria", "logo": "event/03-embassy-of-latvia.webp", "opaque": true },
+        { "name": "Investment and Development Agency of Latvia (LIAA)", "logo": "event/04-liaa.webp" },
+        { "name": "UNIDO", "logo": "event/05-unido.webp" },
+        { "name": "AIM Global", "logo": "event/06-aim-global.webp" },
+        { "name": "Raiffeisen Bank International", "logo": "event/07-raiffeisen-bank-international.webp", "opaque": true },
+        { "name": "Elevator Ventures", "logo": "event/08-elevator-ventures.webp" },
+        { "name": "Bluecode", "logo": "event/09-bluecode.webp" },
+        { "name": "Loom Ventures", "logo": "event/10-loom-ventures.webp", "opaque": true },
+        { "name": "Nobile", "logo": "event/11-nobile.webp" },
+        { "name": "Energiespeicher Österreich", "logo": "event/12-energiespeicher-oesterreich.webp" },
+        { "name": "ACTIU", "logo": "event/13-actiu.webp" }
+      ]
+    },
+    {
+      "id": "supporting",
+      "label": "Supporting Partners",
+      "partners": [
+        { "name": "The Energy Bridge", "logo": "supporting/01-the-energy-bridge.jpeg", "opaque": true },
+        { "name": "AI Austria", "logo": "supporting/02-ai-austria.webp" },
+        { "name": "Die Presse", "logo": "supporting/03-die-presse.webp", "opaque": true },
+        { "name": "Brutkasten", "logo": "supporting/04-brutkasten.webp" },
+        { "name": "b2match", "logo": "supporting/05-b2match.webp" },
+        { "name": "LUME GmbH", "logo": "supporting/06-lume.webp", "opaque": true },
+        { "name": "Ottakringer", "logo": "supporting/07-ottakringer.webp" },
+        { "name": "Vöslauer", "logo": "supporting/08-voeslauer.webp" },
+        { "name": "Bacardi", "logo": "supporting/09-bacardi.webp" },
+        { "name": "SO/ Vienna", "logo": "supporting/10-so-vienna.webp" },
+        { "name": "NEOH", "logo": "supporting/11-neoh.webp" },
+        { "name": "Lemonaid", "logo": "supporting/12-lemonaid.webp" },
+        { "name": "Soulxcoffee", "logo": "supporting/13-soulxcoffee.webp" },
+        { "name": "NUCAO", "logo": "supporting/14-nucao.png" },
+        { "name": "Hitschies", "logo": "supporting/15-hitschies.webp" },
+        { "name": "Leuchtbuchstaben.at", "logo": "supporting/16-leuchtbuchstaben-at.webp" },
+        { "name": "vrei", "logo": "supporting/17-vrei.webp" },
+        { "name": "Game City", "logo": "supporting/18-game-city.webp" }
+      ]
+    }
+  ]
+}
